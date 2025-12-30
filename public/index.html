@@ -4,31 +4,147 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Automotive Block - ECU Diagnostic Tool</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="navbar">
+    <div class="nav-brand">🚗 Automotive Block</div>
+    <div class="nav-status" id="connectionStatus">● Disconnected</div>
+  </div>
+
   <div class="container">
-    <header class="header">
-      <h1>🚗 Automotive Block</h1>
-      <p>ECU Diagnostic & Tuning Tool</p>
-    </header>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="dashboard">📊 Dashboard</button>
+        <button class="nav-item" data-tab="obd2">🔍 OBD-II</button>
+        <button class="nav-item" data-tab="canbus">🚌 CAN Bus</button>
+        <button class="nav-item" data-tab="diagnostics">🩺 Diagnostics</button>
+        <button class="nav-item" data-tab="tuning">⚙️ Tuning</button>
+        <button class="nav-item" data-tab="vehicles">🚙 Vehicles</button>
+      </nav>
+    </aside>
 
-    <main class="content">
-      <section class="status-panel">
-        <h2>System Status</h2>
-        <div id="status">Initializing...</div>
-      </section>
+    <!-- Main Content -->
+    <main class="content-wrapper">
+      
+      <!-- Dashboard Tab -->
+      <div class="tab-content active" id="dashboard">
+        <h1>System Dashboard</h1>
+        
+        <div class="status-grid">
+          <div class="status-card">
+            <h3>System Status</h3>
+            <div id="systemStatus" class="status-value">✓ Running</div>
+          </div>
+          <div class="status-card">
+            <h3>Module Count</h3>
+            <div id="moduleCount" class="status-value">4</div>
+          </div>
+          <div class="status-card">
+            <h3>Active Alerts</h3>
+            <div id="alertCount" class="status-value alert-count">0</div>
+          </div>
+        </div>
 
-      <section class="features-panel">
-        <h2>Features</h2>
-        <ul>
-          <li>✅ Custom UI/Styling</li>
-          <li>✅ Extended ECU Support</li>
-          <li>✅ Advanced Diagnostics</li>
-          <li>✅ Performance Optimized</li>
-          <li>✅ Real-time Monitoring</li>
-        </ul>
-      </section>
+        <div class="chart-container">
+          <h3>Real-time Engine Data</h3>
+          <canvas id="engineChart"></canvas>
+        </div>
+      </div>
+
+      <!-- OBD-II Tab -->
+      <div class="tab-content" id="obd2">
+        <h1>OBD-II Diagnostic Reader</h1>
+        
+        <div class="control-panel">
+          <button class="btn btn-primary" id="readOBD2">Read All PIDs</button>
+          <button class="btn btn-secondary" id="clearDTC">Clear DTC</button>
+        </div>
+
+        <div class="data-section">
+          <h3>Parameter IDs (PIDs)</h3>
+          <div id="pidsList" class="params-list"></div>
+        </div>
+
+        <div class="data-section">
+          <h3>Diagnostic Trouble Codes (DTC)</h3>
+          <div id="dtcList" class="dtc-list"></div>
+        </div>
+      </div>
+
+      <!-- CAN Bus Tab -->
+      <div class="tab-content" id="canbus">
+        <h1>CAN Bus Monitor</h1>
+        
+        <div class="control-panel">
+          <button class="btn btn-primary" id="startCANMonitor">Start Monitoring</button>
+          <button class="btn btn-secondary" id="simulateCANData">Simulate Data</button>
+        </div>
+
+        <div class="can-section">
+          <div class="can-grid">
+            <div class="can-card">
+              <h4>CAN0 Status</h4>
+              <div id="can0Status" class="can-status">Initialized</div>
+              <div class="can-stats">
+                <p>Baudrate: 500k</p>
+                <p id="can0Messages">Messages: 0</p>
+              </div>
+            </div>
+            <div class="can-card">
+              <h4>CAN1 Status</h4>
+              <div id="can1Status" class="can-status">Initialized</div>
+              <div class="can-stats">
+                <p>Baudrate: 250k</p>
+                <p id="can1Messages">Messages: 0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <h3>CAN Message Activity</h3>
+          <canvas id="canChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Diagnostics Tab -->
+      <div class="tab-content" id="diagnostics">
+        <h1>Vehicle Diagnostics</h1>
+        
+        <div class="control-panel">
+          <select id="diagnosticsVehicleSelect">
+            <option value="">Select Vehicle...</option>
+          </select>
+          <button class="btn btn-primary" id="runFullDiagnostic">Run Diagnostic</button>
+        </div>
+
+        <div class="diagnostic-results" id="diagnosticResults"></div>
+      </div>
+
+      <!-- Tuning Tab -->
+      <div class="tab-content" id="tuning">
+        <h1>ECU Tuning Parameters</h1>
+        
+        <div class="control-panel">
+          <select id="tuningVehicleSelect">
+            <option value="">Select Vehicle...</option>
+          </select>
+          <button class="btn btn-primary" id="loadTuningParams">Load Parameters</button>
+        </div>
+
+        <div class="tuning-panel" id="tuningPanel"></div>
+      </div>
+
+      <!-- Vehicles Tab -->
+      <div class="tab-content" id="vehicles">
+        <h1>ECU Database</h1>
+        
+        <div class="vehicles-grid" id="vehiclesGrid"></div>
+      </div>
+
     </main>
   </div>
 
