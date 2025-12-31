@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <AssemblyName>PineFlipManager</AssemblyName>
+    <Version>1.0.0</Version>
+    <Authors>Bad Antics | Built by antx</Authors>
+    <Company>Bad Antics</Company>
+    <Product>PineFlip Manager Native</Product>
+    <Description>Native Windows device manager for Flipper Zero and WiFi Pineapple - Built by antx</Description>
+    <Copyright>Copyright © 2025 Bad Antics | Built by antx</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

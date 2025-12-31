@@ -1,0 +1,121 @@
+<Window x:Class="PineFlipManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PineFlip Manager - Bad Antics | Built by antx" 
+        Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="10">
+            <StackPanel>
+                <TextBlock Text="║ PINEFLIP MANAGER ║" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Flipper Zero + WiFi Pineapple Unified Controller" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Main TabControl -->
+        <TabControl Grid.Row="1" Margin="10">
+            
+            <!-- Flipper Zero Tab -->
+            <TabItem Header="⚡ FLIPPER ZERO">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Flipper Status -->
+                    <Border Grid.Row="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Name="FlipperStatus" Text="Status: Disconnected" FontWeight="Bold" FontSize="14"/>
+                            <TextBlock Name="FlipperPort" Text="Port: N/A" Margin="0,4,0,0"/>
+                            <TextBlock Name="FlipperFirmware" Text="Firmware: N/A" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Flipper Controls -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <Button Name="FlipperConnectBtn" Content="CONNECT" Width="120" Click="FlipperConnect_Click"/>
+                        <Button Name="FlipperRefreshBtn" Content="REFRESH INFO" Width="120" Click="FlipperRefresh_Click"/>
+                        <Button Name="FlipperDisconnectBtn" Content="DISCONNECT" Width="120" Click="FlipperDisconnect_Click"/>
+                    </StackPanel>
+                    
+                    <!-- Flipper Output -->
+                    <Border Grid.Row="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+                        <ScrollViewer>
+                            <TextBox Name="FlipperOutput" 
+                                     Text="Flipper Zero output will appear here..."
+                                     TextWrapping="Wrap" 
+                                     AcceptsReturn="True"
+                                     IsReadOnly="True"
+                                     BorderThickness="0"
+                                     VerticalScrollBarVisibility="Auto"
+                                     MinHeight="300"/>
+                        </ScrollViewer>
+                    </Border>
+                    
+                    <!-- Flipper Command Input -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal">
+                        <TextBox Name="FlipperCommandInput" Width="600" Height="30" VerticalContentAlignment="Center" KeyDown="FlipperCommand_KeyDown"/>
+                        <Button Content="SEND" Width="100" Click="FlipperSendCommand_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- WiFi Pineapple Tab -->
+            <TabItem Header="🍍 WIFI PINEAPPLE">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Pineapple Status -->
+                    <Border Grid.Row="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Name="PineappleStatus" Text="Status: Not Connected" FontWeight="Bold" FontSize="14"/>
+                            <TextBlock Name="PineappleIP" Text="IP: N/A" Margin="0,4,0,0"/>
+                            <TextBlock Name="PineapplePort" Text="Port: N/A" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Pineapple Controls -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <Button Name="PineappleDiscoverBtn" Content="DISCOVER" Width="120" Click="PineappleDiscover_Click"/>
+                        <Button Name="PineappleStatusBtn" Content="GET STATUS" Width="120" Click="PineappleStatus_Click"/>
+                        <Button Name="PineappleOpenWebBtn" Content="OPEN WEB UI" Width="120" Click="PineappleOpenWeb_Click"/>
+                    </StackPanel>
+                    
+                    <!-- Pineapple Output -->
+                    <Border Grid.Row="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="10">
+                        <ScrollViewer>
+                            <TextBox Name="PineappleOutput" 
+                                     Text="WiFi Pineapple output will appear here..."
+                                     TextWrapping="Wrap" 
+                                     AcceptsReturn="True"
+                                     IsReadOnly="True"
+                                     BorderThickness="0"
+                                     VerticalScrollBarVisibility="Auto"
+                                     MinHeight="400"/>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </TabItem>
+            
+        </TabControl>
+        
+        <!-- Footer -->
+        <Border Grid.Row="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="10">
+            <TextBlock Text="Bad Antics | Built by antx | PineFlip Manager v1.0.0" HorizontalAlignment="Center" FontSize="11"/>
+        </Border>
+    </Grid>
+</Window>

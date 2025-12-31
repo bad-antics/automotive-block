@@ -1,0 +1,26 @@
+# Build outputs
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+
+# Keep release folder but ignore exe
+!release/
+release/*.exe
+release/*.pdb
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+# Rider
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
