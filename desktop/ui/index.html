@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackFlag v2.0 - Desktop Edition</title>
+    <link rel="stylesheet" href="styles-blackflag.css">
+    <link rel="stylesheet" href="themes.css">
+    <style>
+        /* Desktop-specific overrides */
+        .window-controls {
+            position: fixed;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            z-index: 2000;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .window-controls button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--neon-green);
+            background: rgba(0, 255, 0, 0.1);
+            color: var(--neon-green);
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .window-controls button:hover {
+            background: rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .app-status {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.8rem 1.2rem;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--neon-green);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            z-index: 100;
+        }
+        
+        .app-status.online {
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+        
+        .app-status.offline {
+            color: var(--neon-red);
+            border-color: var(--neon-red);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .app-status.online .status-indicator {
+            background: var(--neon-green);
+            box-shadow: 0 0 5px var(--neon-green);
+        }
+        
+        .app-status.offline .status-indicator {
+            background: var(--neon-red);
+            box-shadow: 0 0 5px var(--neon-red);
+            animation: none;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Desktop navbar adjustment */
+        .navbar {
+            padding-top: 2rem;
+        }
+        
+        body.dark-pirate-theme::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            z-index: 1999;
+        }
+    </style>
+</head>
+<body class="dark-pirate-theme">
+    <!-- Window Controls (Desktop) -->
+    <div class="window-controls" id="windowControls">
+        <button id="minimizeBtn" title="Minimize">−</button>
+        <button id="maximizeBtn" title="Maximize">□</button>
+        <button id="closeBtn" title="Close">✕</button>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-name">☠️ BLACKFLAG v2.0 ☠️</span>
+            </div>
+            <div class="nav-tagline">Professional ECU Hacking & Tuning Suite - Desktop Edition</div>
+            <div class="nav-links">
+                <select id="themeSelector" class="theme-selector" onchange="switchTheme(this.value)">
+                    <option value="cyberpunk">🎨 Cyberpunk</option>
+                    <option value="commodore64">💾 Commodore 64</option>
+                    <option value="ford-fjds">🔧 Ford FJDS</option>
+                    <option value="witech">🚗 Witech</option>
+                </select>
+                <span style="color: var(--neon-green); opacity: 0.5;">|</span>
+                <a href="#" onclick="openSettings(); return false;" class="nav-link">⚙️ Settings</a>
+                <span style="color: var(--neon-green); opacity: 0.5;">|</span>
+                <span id="backendStatus" style="color: var(--neon-green); font-size: 0.9rem;">🔌 Checking...</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Status Banner -->
+    <div class="status-banner">
+        <div class="status-content">
+            <span class="status-indicator green">●</span>
+            <span class="status-text">Desktop App Online</span>
+            <span class="status-separator">|</span>
+            <span class="status-item" id="versionDisplay">Version: 2.0.0</span>
+            <span class="status-separator">|</span>
+            <span class="free-badge">DESKTOP EDITION</span>
+        </div>
+    </div>
+
+    <!-- Main Container (use same HTML as web version) -->
+    <div class="main-container-menu">
+        <!-- Menu Screen -->
+        <div id="menuScreen" class="screen active">
+            <div class="menu-header">
+                <h1>⚫ BLACKFLAG COMMAND CENTER</h1>
+                <p>Desktop Edition - Professional ECU Suite</p>
+            </div>
+
+            <!-- Vehicle History & Profiles Panel -->
+            <div class="menu-section">
+                <h2>📋 VEHICLE HISTORY & PROFILES</h2>
+                <div class="vehicle-history-panel">
+                    <!-- Add New Vehicle -->
+                    <div class="add-vehicle-section">
+                        <label>Manufacturer:</label>
+                        <select id="manufacturerFilter" class="vehicle-select" onchange="filterByManufacturer(this.value)">
+                            <option value="">⚔️ All Manufacturers</option>
+                        </select>
+                        <label>Vehicle:</label>
+                        <select id="vehicleSelector" class="vehicle-select">
+                            <option value="">⚔️ Choose a vehicle...</option>
+                        </select>
+                        <button class="menu-btn primary" onclick="addCurrentToHistory()">➕ ADD TO HISTORY</button>
+                    </div>
+
+                    <!-- Vehicle History List -->
+                    <div class="history-list">
+                        <h3>Recent Vehicles</h3>
+                        <div id="historyItems" class="history-items">
+                            <p class="empty-state">No vehicles in history. Add one above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ECU Profiles Section -->
+            <div class="menu-section" id="ecuProfilesSection" style="display: none;">
+                <h2>🔧 ECU PROFILES</h2>
+                <div class="ecu-profiles-panel">
+                    <div class="profile-grid" id="ecuProfiles"></div>
+                    <button class="menu-btn" onclick="createNewProfile()">➕ CREATE NEW PROFILE</button>
+                </div>
+            </div>
+
+            <!-- Backup Tunes Section -->
+            <div class="menu-section" id="backupTunesSection" style="display: none;">
+                <h2>💾 BACKUP TUNES</h2>
+                <div class="backup-tunes-panel">
+                    <div class="backup-list" id="backupTunes"></div>
+                    <button class="menu-btn primary" onclick="createBackup()">💾 CREATE BACKUP</button>
+                </div>
+            </div>
+
+            <!-- Stock Mapping Section -->
+            <div class="menu-section" id="stockMappingSection" style="display: none;">
+                <h2>📊 STOCK MAPPING</h2>
+                <div class="stock-mapping-panel">
+                    <div class="mapping-display" id="stockMapping"></div>
+                    <button class="menu-btn" onclick="exportStockMap()">📥 EXPORT STOCK MAP</button>
+                </div>
+            </div>
+            <div id="vehicleInfo" class="info-display" style="display:none;"></div>
+
+            <!-- Main Functions Grid (9 cards) -->
+            <div class="functions-grid">
+                <div class="menu-card" onclick="openFunction('vin-decoder')">
+                    <div class="card-icon">🔍</div>
+                    <h3>VIN Decoder</h3>
+                    <p>Decode VINs & export specs</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('ecu-scanner')">
+                    <div class="card-icon">🔌</div>
+                    <h3>ECU Scanner</h3>
+                    <p>Detect ECUs & connections</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('voltage-meter')">
+                    <div class="card-icon">⚡</div>
+                    <h3>Voltage Meter</h3>
+                    <p>Monitor system voltage</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('wiring-diagrams')">
+                    <div class="card-icon">📋</div>
+                    <h3>Wiring Diagrams</h3>
+                    <p>View circuits & connections</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('tune-manager')">
+                    <div class="card-icon">⚡</div>
+                    <h3>Tune Manager</h3>
+                    <p>Browse & apply ECU tunes</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('ecu-cloning')">
+                    <div class="card-icon">💾</div>
+                    <h3>ECU Cloning</h3>
+                    <p>Backup, clone & restore</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('module-installer')">
+                    <div class="card-icon">📦</div>
+                    <h3>Module Installer</h3>
+                    <p>Install custom modules</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('emissions-control')">
+                    <div class="card-icon">💨</div>
+                    <h3>Emissions Control</h3>
+                    <p>DPF/SCR/EGR management</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('library-browser')">
+                    <div class="card-icon">📚</div>
+                    <h3>Library Browser</h3>
+                    <p>Guides, specs & diagrams</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Function Screens -->
+        <div id="functionScreensPlaceholder">
+            
+            <!-- VIN Decoder Screen -->
+            <div class="screen" id="vin-decoder">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>🔍 VIN DECODER</h1>
+                <div class="function-content">
+                    <div class="input-group">
+                        <label>Enter VIN:</label>
+                        <input type="text" id="vinInput" placeholder="Enter 17-character VIN..." maxlength="17" style="width: 100%; padding: 1rem; font-size: 1.2rem; font-family: monospace;">
+                        <button class="menu-btn primary" onclick="decodeVIN()">🔍 DECODE VIN</button>
+                    </div>
+                    <div id="vinResults" class="results-panel"></div>
+                </div>
+            </div>
+
+            <!-- ECU Scanner Screen -->
+            <div class="screen" id="ecu-scanner">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>🔌 ECU SCANNER</h1>
+                <div class="function-content">
+                    <div class="scanner-controls">
+                        <button class="menu-btn primary" onclick="startECUScan()">▶️ START SCAN</button>
+                        <button class="menu-btn" onclick="stopECUScan()">⏹️ STOP</button>
+                    </div>
+                    <div id="ecuScanResults" class="results-panel">
+                        <p class="empty-state">Click START SCAN to detect connected ECUs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voltage Meter Screen -->
+            <div class="screen" id="voltage-meter">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>⚡ VOLTAGE METER</h1>
+                <div class="function-content">
+                    <div class="voltage-display">
+                        <div class="voltage-value" id="voltageValue">--.-V</div>
+                        <div class="voltage-bar" id="voltageBar"></div>
+                    </div>
+                    <div class="voltage-controls">
+                        <button class="menu-btn primary" onclick="startVoltageMonitor()">▶️ START MONITORING</button>
+                        <button class="menu-btn" onclick="stopVoltageMonitor()">⏹️ STOP</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wiring Diagrams Screen -->
+            <div class="screen" id="wiring-diagrams">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>📋 WIRING DIAGRAMS</h1>
+                <div class="function-content">
+                    <div class="diagram-selector">
+                        <select id="diagramType" onchange="loadDiagram(this.value)">
+                            <option value="">Select diagram type...</option>
+                            <option value="obd2">OBD-II Connector</option>
+                            <option value="can-bus">CAN Bus Network</option>
+                            <option value="ecu-pinout">ECU Pinout</option>
+                        </select>
+                    </div>
+                    <div id="diagramDisplay" class="diagram-viewer"></div>
+                </div>
+            </div>
+
+            <!-- Tune Manager Screen -->
+            <div class="screen" id="tune-manager">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>⚡ TUNE MANAGER</h1>
+                <div class="function-content">
+                    <div class="tune-controls">
+                        <button class="menu-btn primary" onclick="loadTunesList()">🔄 REFRESH TUNES</button>
+                        <button class="menu-btn" onclick="importTune()">📥 IMPORT TUNE</button>
+                        <button class="menu-btn" onclick="createNewTune()">➕ NEW TUNE</button>
+                    </div>
+                    <div id="tunesList" class="tunes-grid">
+                        <p class="empty-state">No tunes available. Import or create a new tune.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ECU Cloning Screen -->
+            <div class="screen" id="ecu-cloning">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>💾 ECU CLONING</h1>
+                <div class="function-content">
+                    <div class="cloning-options">
+                        <button class="menu-btn primary" onclick="readECU()">📤 READ ECU</button>
+                        <button class="menu-btn" onclick="writeECU()">📥 WRITE ECU</button>
+                        <button class="menu-btn" onclick="cloneECU()">🔄 CLONE ECU</button>
+                    </div>
+                    <div id="cloningStatus" class="results-panel">
+                        <p class="empty-state">Select an operation to begin</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module Installer Screen -->
+            <div class="screen" id="module-installer">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>📦 MODULE INSTALLER</h1>
+                <div class="function-content">
+                    <div class="module-list" id="moduleList">
+                        <div class="module-card">
+                            <h3>🔧 J2534 PassThru Driver</h3>
+                            <p>Standard J2534 communication protocol</p>
+                            <button class="menu-btn" onclick="installModule('j2534')">INSTALL</button>
+                        </div>
+                        <div class="module-card">
+                            <h3>📡 CAN Bus Analyzer</h3>
+                            <p>Advanced CAN frame analysis</p>
+                            <button class="menu-btn" onclick="installModule('canbus')">INSTALL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Tuning Screen -->
+            <div class="screen" id="performance-tuning">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>🏎️ PERFORMANCE TUNING</h1>
+                <div class="function-content">
+                    <div class="tuning-tabs">
+                        <button class="tune-tab active" onclick="showTuneTab('maps')">Fuel Maps</button>
+                        <button class="tune-tab" onclick="showTuneTab('timing')">Ignition Timing</button>
+                        <button class="tune-tab" onclick="showTuneTab('boost')">Boost Control</button>
+                    </div>
+                    <div id="tuningContent" class="tuning-panel">
+                        <p class="empty-state">Select a vehicle first to load tuning parameters</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library Browser Screen -->
+            <div class="screen" id="library-browser">
+                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                <h1>📚 LIBRARY BROWSER</h1>
+                <div class="library-tabs">
+                    <button class="library-tab active" onclick="switchLibraryTab('guides')">Diagnostic Guides</button>
+                    <button class="library-tab" onclick="switchLibraryTab('vehicle-info')">Vehicle Information</button>
+                    <button class="library-tab" onclick="switchLibraryTab('diagrams')">Wiring Diagrams</button>
+                </div>
+                
+                <!-- Diagnostic Guides Tab -->
+                <div class="library-content active" id="lib-guides">
+                    <div class="guide-list">
+                        <div class="guide-card" onclick="viewGuide('obd2-codes')">
+                            <h3>📋 OBD-II Diagnostic Trouble Codes</h3>
+                            <p>Complete DTC reference with P, C, B, and U codes</p>
+                        </div>
+                        <div class="guide-card" onclick="viewGuide('obd2-pids')">
+                            <h3>🔌 OBD-II Parameter IDs (PIDs)</h3>
+                            <p>Standard PIDs for reading vehicle data</p>
+                        </div>
+                        <div class="guide-card" onclick="viewGuide('dpf-removal')">
+                            <h3>💨 DPF Delete & Disable</h3>
+                            <p>Diesel Particulate Filter removal procedures</p>
+                        </div>
+                        <div class="guide-card" onclick="viewGuide('scr-tuning')">
+                            <h3>⚗️ SCR System Tuning</h3>
+                            <p>Selective Catalytic Reduction modifications</p>
+                        </div>
+                        <div class="guide-card" onclick="viewGuide('egr-disable')">
+                            <h3>🔧 EGR Disable Procedures</h3>
+                            <p>Exhaust Gas Recirculation disabling</p>
+                        </div>
+                        <div class="guide-card" onclick="viewGuide('performance-tuning')">
+                            <h3>⚡ Performance ECU Tuning</h3>
+                            <p>Stage 1, 2, 3 tuning fundamentals</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vehicle Information Tab -->
+                <div class="library-content" id="lib-vehicle-info">
+                    <input type="text" id="vehicleSearch" placeholder="Search vehicles..." onkeyup="if(event.key==='Enter') searchVehicleDatabase(this.value)">
+                    <button class="btn" onclick="searchVehicleDatabase(document.getElementById('vehicleSearch').value)">🔍 Search</button>
+                    <div class="vehicle-grid"></div>
+                </div>
+                
+                <!-- Wiring Diagrams Tab -->
+                <div class="library-content" id="lib-diagrams">
+                    <div class="diagram-list">
+                        <div class="diagram-card" onclick="loadWiringDiagram('obd2-pinout')">
+                            <h3>📌 OBD2 Connector Pinout</h3>
+                            <p>16-pin J1962 connector diagram</p>
+                        </div>
+                        <div class="diagram-card" onclick="loadWiringDiagram('can-bus')">
+                            <h3>🔌 CAN Bus Wiring</h3>
+                            <p>Controller Area Network topology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- App Status Indicator -->
+    <div class="app-status online" id="appStatus">
+        <span class="status-indicator"></span>
+        <span id="statusText">Backend: Online</span>
+    </div>
+
+    <!-- Guide Modal -->
+    <div class="guide-modal" id="guideModal">
+        <div class="guide-modal-content" id="guideModalContent">
+            <!-- Content injected by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>BlackFlag v2.0 Desktop | Professional ECU Suite | Free & Open Source | MIT License</p>
+    </footer>
+
+    <!-- API Helper for Database Operations -->
+    <script src="api-helper.js"></script>
+    
+    <!-- Main Application Scripts -->    <script src="blackflag-app.js"></script>
+    <script src="desktop-app.js"></script>
+</body>
+</html>

@@ -1,2 +1,0 @@
-W:\misc workspaces\blackflag\native\bin\Release\net8.0-windows\win-x64\publish\BlackFlag.pdb
-W:\misc workspaces\blackflag\native\bin\Release\net8.0-windows\win-x64\publish\BlackFlag.exe

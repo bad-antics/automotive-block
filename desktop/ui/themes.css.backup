@@ -1,0 +1,442 @@
+/* ======================================
+   BLACKFLAG v2.0 - ADDITIONAL THEMES
+   Commodore 64, Ford FJDS, Witech
+   Classic Computer System Interfaces
+   ====================================== */
+
+/* ============ COMMODORE 64 THEME - Authentic C64 BASIC Interface ============ */
+body.commodore64-theme {
+    background: #3E31A2; /* Classic C64 blue */
+    color: #7C71DA; /* Light blue text */
+    font-family: 'Courier New', 'C64 Pro Mono', monospace;
+    text-shadow: none;
+}
+
+/* Retro PETSCII-style borders and boxes */
+body.commodore64-theme .navbar {
+    background: #3E31A2;
+    border-bottom: 3px double #7C71DA;
+    border-top: 3px double #7C71DA;
+    padding: 10px 0;
+}
+
+body.commodore64-theme .brand-name {
+    color: #A39EDB;
+    text-shadow: 2px 2px 0px #2B218C; /* Retro shadow effect */
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Classic C64 box drawing characters style */
+body.commodore64-theme .menu-card,
+body.commodore64-theme .history-item,
+body.commodore64-theme .profile-card,
+body.commodore64-theme .backup-item,
+body.commodore64-theme .map-section {
+    border: 2px solid #7C71DA;
+    background: rgba(62, 49, 162, 0.8); /* Slightly darker blue */
+    box-shadow: none; /* No glow - authentic C64 had no glow */
+    position: relative;
+}
+
+/* PETSCII-style corners */
+body.commodore64-theme .menu-card::before,
+body.commodore64-theme .history-item::before {
+    content: '\u250C'; /* Box drawing character ┌ */
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    color: #7C71DA;
+    font-size: 16px;
+}
+
+body.commodore64-theme .menu-card::after,
+body.commodore64-theme .history-item::after {
+    content: '\u2510'; /* Box drawing character ┐ */
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    color: #7C71DA;
+    font-size: 16px;
+}
+
+body.commodore64-theme .menu-card:hover,
+body.commodore64-theme .history-item:hover {
+    border-color: #A39EDB;
+    background: rgba(124, 113, 218, 0.3);
+    cursor: pointer;
+}
+
+body.commodore64-theme .menu-card h3,
+body.commodore64-theme .nav-brand,
+body.commodore64-theme h1, 
+body.commodore64-theme h2,
+body.commodore64-theme h3,
+body.commodore64-theme h4 {
+    color: #A39EDB;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* C64-style buttons with blocky appearance */
+body.commodore64-theme .btn, 
+body.commodore64-theme .menu-btn,
+body.commodore64-theme .btn-small {
+    border: 2px solid #7C71DA;
+    background: #5045BE;
+    color: #A39EDB;
+    box-shadow: 4px 4px 0px #2B218C; /* Retro 3D effect */
+    border-radius: 0; /* Sharp corners */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+body.commodore64-theme .btn:hover,
+body.commodore64-theme .menu-btn:hover,
+body.commodore64-theme .btn-small:hover {
+    background: #7C71DA;
+    color: #3E31A2;
+    box-shadow: 2px 2px 0px #2B218C;
+    transform: translate(2px, 2px); /* Button press effect */
+}
+
+body.commodore64-theme .status-banner {
+    background: #5045BE;
+    border-bottom: 2px solid #7C71DA;
+    border-top: 2px solid #7C71DA;
+    padding: 8px;
+}
+
+/* C64-style input fields */
+body.commodore64-theme .vehicle-select,
+body.commodore64-theme input,
+body.commodore64-theme textarea {
+    background: #3E31A2;
+    border: 2px solid #7C71DA;
+    color: #A39EDB;
+    font-family: 'Courier New', monospace;
+    border-radius: 0;
+}
+
+body.commodore64-theme .vehicle-select:focus,
+body.commodore64-theme input:focus,
+body.commodore64-theme textarea:focus {
+    border-color: #A39EDB;
+    background: #5045BE;
+    outline: none;
+}
+
+body.commodore64-theme .library-tab.active {
+    border-bottom: 3px solid #A39EDB;
+    color: #A39EDB;
+    background: #5045BE;
+}
+
+body.commodore64-theme .history-info strong,
+body.commodore64-theme .backup-info strong,
+body.commodore64-theme .profile-card h4 {
+    color: #A39EDB;
+}
+
+body.commodore64-theme .history-info span,
+body.commodore64-theme .backup-info span,
+body.commodore64-theme .profile-stats span {
+    color: #7C71DA;
+}
+
+body.commodore64-theme .status-indicator.blue {
+    background: #7C71DA;
+    box-shadow: 0 0 5px #7C71DA;
+}
+
+/* ============ FORD FJDS THEME - Authentic Ford Diagnostic Software Interface ============ */
+body.ford-fjds-theme {
+    background: #f0f0f0; /* Light gray professional background */
+    color: #333333;
+    font-family: 'Arial', 'Segoe UI', sans-serif;
+    text-shadow: none;
+}
+
+/* Ford-style professional blue header */
+body.ford-fjds-theme .navbar {
+    background: linear-gradient(180deg, #003d7a 0%, #002952 100%);
+    border-bottom: 4px solid #00aaff;
+    border-top: 1px solid #0059a3;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.ford-fjds-theme .brand-name {
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+body.ford-fjds-theme .menu-card,
+body.ford-fjds-theme .history-item,
+body.ford-fjds-theme .profile-card,
+body.ford-fjds-theme .backup-item,
+body.ford-fjds-theme .map-section {
+    border: 2px solid #00aaff;
+    background: linear-gradient(135deg, rgba(0, 170, 255, 0.08) 0%, rgba(0, 84, 143, 0.05) 100%);
+    box-shadow: 0 2px 8px rgba(0, 170, 255, 0.2);
+    border-radius: 2px;
+}
+
+body.ford-fjds-theme .menu-card:hover,
+body.ford-fjds-theme .history-item:hover {
+    border-color: #ffffff;
+    background: linear-gradient(135deg, rgba(0, 170, 255, 0.15) 0%, rgba(0, 84, 143, 0.1) 100%);
+    box-shadow: 0 4px 16px rgba(0, 170, 255, 0.4);
+}
+
+body.ford-fjds-theme .menu-card h3,
+body.ford-fjds-theme h3,
+body.ford-fjds-theme h4,
+body.ford-fjds-theme .history-info strong,
+body.ford-fjds-theme .backup-info strong {
+    color: #00aaff;
+    font-weight: bold;
+}
+
+body.ford-fjds-theme h1, 
+body.ford-fjds-theme h2 {
+    color: #ffffff;
+    border-left: 4px solid #00aaff;
+    padding-left: 1rem;
+}
+
+body.ford-fjds-theme .btn, 
+body.ford-fjds-theme .menu-btn,
+body.ford-fjds-theme .btn-small {
+    border: 2px solid #00aaff;
+    background: rgba(0, 170, 255, 0.1);
+    color: #00aaff;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+body.ford-fjds-theme .btn:hover,
+body.ford-fjds-theme .menu-btn:hover,
+body.ford-fjds-theme .btn-small:hover {
+    background: rgba(0, 170, 255, 0.25);
+    box-shadow: 0 0 12px rgba(0, 170, 255, 0.6);
+    color: #ffffff;
+}
+
+body.ford-fjds-theme .status-banner {
+    background: #003d7a;
+    border-bottom: 2px solid #00aaff;
+    color: #ffffff;
+}
+
+body.ford-fjds-theme .vehicle-select,
+body.ford-fjds-theme input,
+body.ford-fjds-theme textarea {
+    background: #0a0a0a;
+    border: 2px solid #00aaff;
+    color: #00aaff;
+    border-radius: 2px;
+}
+
+body.ford-fjds-theme .library-tab.active {
+    border-bottom: 3px solid #00aaff;
+    color: #ffffff;
+    background: rgba(0, 170, 255, 0.2);
+}
+
+body.ford-fjds-theme .footer {
+    border-top: 2px solid #00aaff;
+    background: #003d7a;
+}
+
+body.ford-fjds-theme .history-info span,
+body.ford-fjds-theme .backup-info span,
+body.ford-fjds-theme .profile-stats span,
+body.ford-fjds-theme .map-data span {
+    color: #ffffff;
+}
+
+body.ford-fjds-theme .status-indicator.blue {
+    background: #00aaff;
+    box-shadow: 0 0 10px #00,
+body.witech-theme .history-item,
+body.witech-theme .profile-card,
+body.witech-theme .backup-item,
+body.witech-theme .map-section {
+    border: 1px solid #555;
+    background: linear-gradient(135deg, rgba(255, 102, 0, 0.05) 0%, rgba(45, 45, 45, 0.8) 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+body.witech-theme .menu-card:hover,
+body.witech-theme .history-item:hover {
+    border-color: #ff6600;
+    background: linear-gradient(135deg, rgba(255, 102, 0, 0.12) 0%, rgba(45, 45, 45, 0.9) 100%);
+    box-shadow: 0 4px 20px rgba(255, 102, 0, 0.3);
+}
+
+body.witech-theme .menu-card h3,
+body.witech-theme h3,
+body.witech-theme h4,
+body.witech-theme .history-info strong,
+body.witech-theme .backup-info strong,
+body.witech-theme .profile-card h4 {
+    color: #ff6600;
+    font-weight: 600;
+}
+
+body.witech-theme h1, 
+body.witech-theme h2 {
+    color: #e8e8e8;
+    border-bottom: 2px solid #ff6600;
+    padding-bottom: 0.5rem;
+}
+
+body.witech-theme .btn, 
+body.witech-theme .menu-btn,
+body.witech-theme .btn-small {
+    border: 2px solid #ff6600;
+    background: rgba(255, 102, 0, 0.15);
+    color: #ff6600;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+body.witech-theme .btn:hover,
+body.witech-theme .menu-btn:hover,
+body.witech-theme .btn-small:hover {
+    background: rgba(255, 102, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+    color: #ffffff;
+}
+
+body.witech-theme .status-banner {
+    background: linear-gradient(90deg, rgba(255, 102, 0, 0.1) 0%, transparent 100%);
+    border-bottom: 1px solid #ff6600;
+    color: #e8e8e8;
+}
+
+body.witech-theme .vehicle-select,
+body.witech-theme input,
+body.witech-theme textarea {
+    background: #1c1c1c;
+    border: 1px solid #555;
+    color: #e8e8e8;
+    border-radius: 4px;
+}
+
+body.witech-theme .vehicle-select:focus,
+body.witech-theme input:focus,
+body.witech-theme textarea:focus {
+    border-color: #ff6600;
+    box-shadow: 0 0 8px rgba(255, 102, 0, 0.3);
+}
+
+body.witech-theme .library-tab.active {
+    border-bottom: 2px solid #ff6600;
+    color: #ff6600;
+    background: rgba(255, 102, 0, 0.1);
+}
+
+body.witech-theme .footer {
+    border-top: 1px solid #555;
+    background: #1c1c1c;
+}
+
+body.witech-theme .history-info span,
+body.witech-theme .backup-info span,
+body.witech-theme .profile-stats span,
+body.witech-theme .map-data span {
+    color: #e8e8e8;
+}
+
+body.witech-theme .status-indicator.orange {
+    background: #ff6600;
+    box-shadow: 0 0 10px #ff6600;
+}
+
+body.witech-theme .vehicle-select,
+body.witech-theme input,
+body.witech-theme textarea {
+    background: #1c1c1c;
+    border: 1px solid #555;
+    color: #e8e8e8;
+    border-radius: 4px;
+}
+
+body.witech-theme .vehicle-select:focus,
+body.witech-theme input:focus,
+body.witech-theme textarea:focus {
+    border-color: #ff6600;
+    box-shadow: 0 0 8px rgba(255, 102, 0, 0.3);
+}
+
+body.witech-theme .library-tab.active {
+    border-bottom: 2px solid #ff6600;
+    color: #ff6600;
+    background: rgba(255, 102, 0, 0.1);
+}
+
+body.witech-theme .footer {
+    border-top: 1px solid #555;
+    background: #1c1c1c;
+}
+
+/* ============ THEME SELECTOR STYLING ============ */
+.theme-selector {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.theme-selector:hover {
+    background: rgba(0, 255, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.theme-selector option {
+    background: #000;
+    color: #00ff00;
+}
+
+body.commodore64-theme .theme-selector {
+    border-color: #7C71DA;
+    color: #A39EDB;
+    background: rgba(124, 113, 218, 0.15);
+}
+
+body.commodore64-theme .theme-selector option {
+    background: #3E31A2;
+    color: #A39EDB;
+}
+
+body.ford-fjds-theme .theme-selector {
+    border-color: #00aaff;
+    color: #00aaff;
+    background: rgba(0, 170, 255, 0.1);
+}
+
+body.ford-fjds-theme .theme-selector option {
+    background: #003d7a;
+    color: #00aaff;
+}
+
+body.witech-theme .theme-selector {
+    border-color: #ff6600;
+    color: #ff6600;
+    background: rgba(255, 102, 0, 0.15);
+}
+
+body.witech-theme .theme-selector option {
+    background: #0d1117;
+    color: #ff6600;
+}

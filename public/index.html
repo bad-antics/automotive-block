@@ -1,153 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Automotive Block - ECU Diagnostic Tool</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackFlag - ECU Hacking & Tuning Suite</title>
+    <link rel="stylesheet" href="styles-blackflag.css">
+    <link rel="stylesheet" href="themes.css">
 </head>
-<body>
-  <div class="navbar">
-    <div class="nav-brand">🚗 Automotive Block</div>
-    <div class="nav-status" id="connectionStatus">● Disconnected</div>
-  </div>
-
-  <div class="container">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-      <nav class="nav-menu">
-        <button class="nav-item active" data-tab="dashboard">📊 Dashboard</button>
-        <button class="nav-item" data-tab="obd2">🔍 OBD-II</button>
-        <button class="nav-item" data-tab="canbus">🚌 CAN Bus</button>
-        <button class="nav-item" data-tab="diagnostics">🩺 Diagnostics</button>
-        <button class="nav-item" data-tab="tuning">⚙️ Tuning</button>
-        <button class="nav-item" data-tab="vehicles">🚙 Vehicles</button>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="content-wrapper">
-      
-      <!-- Dashboard Tab -->
-      <div class="tab-content active" id="dashboard">
-        <h1>System Dashboard</h1>
-        
-        <div class="status-grid">
-          <div class="status-card">
-            <h3>System Status</h3>
-            <div id="systemStatus" class="status-value">✓ Running</div>
-          </div>
-          <div class="status-card">
-            <h3>Module Count</h3>
-            <div id="moduleCount" class="status-value">4</div>
-          </div>
-          <div class="status-card">
-            <h3>Active Alerts</h3>
-            <div id="alertCount" class="status-value alert-count">0</div>
-          </div>
-        </div>
-
-        <div class="chart-container">
-          <h3>Real-time Engine Data</h3>
-          <canvas id="engineChart"></canvas>
-        </div>
-      </div>
-
-      <!-- OBD-II Tab -->
-      <div class="tab-content" id="obd2">
-        <h1>OBD-II Diagnostic Reader</h1>
-        
-        <div class="control-panel">
-          <button class="btn btn-primary" id="readOBD2">Read All PIDs</button>
-          <button class="btn btn-secondary" id="clearDTC">Clear DTC</button>
-        </div>
-
-        <div class="data-section">
-          <h3>Parameter IDs (PIDs)</h3>
-          <div id="pidsList" class="params-list"></div>
-        </div>
-
-        <div class="data-section">
-          <h3>Diagnostic Trouble Codes (DTC)</h3>
-          <div id="dtcList" class="dtc-list"></div>
-        </div>
-      </div>
-
-      <!-- CAN Bus Tab -->
-      <div class="tab-content" id="canbus">
-        <h1>CAN Bus Monitor</h1>
-        
-        <div class="control-panel">
-          <button class="btn btn-primary" id="startCANMonitor">Start Monitoring</button>
-          <button class="btn btn-secondary" id="simulateCANData">Simulate Data</button>
-        </div>
-
-        <div class="can-section">
-          <div class="can-grid">
-            <div class="can-card">
-              <h4>CAN0 Status</h4>
-              <div id="can0Status" class="can-status">Initialized</div>
-              <div class="can-stats">
-                <p>Baudrate: 500k</p>
-                <p id="can0Messages">Messages: 0</p>
-              </div>
+<body class="dark-pirate-theme">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-name">☠️ BLACKFLAG v2.0 ☠️</span>
             </div>
-            <div class="can-card">
-              <h4>CAN1 Status</h4>
-              <div id="can1Status" class="can-status">Initialized</div>
-              <div class="can-stats">
-                <p>Baudrate: 250k</p>
-                <p id="can1Messages">Messages: 0</p>
-              </div>
+            <div class="nav-tagline">Professional ECU Hacking & Tuning Suite</div>
+            <div class="nav-links">
+                <select id="themeSelector" class="theme-selector" onchange="switchTheme(this.value)">
+                    <option value="cyberpunk">🎨 Cyberpunk</option>
+                    <option value="commodore64">💾 Commodore 64</option>
+                    <option value="ford-fjds">🔧 Ford FJDS</option>
+                    <option value="witech">🚗 Witech</option>
+                </select>
+                <a href="https://discord.gg/killers" target="_blank" class="nav-link discord-link">💬 Discord</a>
             </div>
-          </div>
+        </div>
+    </nav>
+
+    <!-- Status Banner -->
+    <div class="status-banner">
+        <div class="status-content">
+            <span class="status-indicator green">●</span>
+            <span class="status-text">System Online</span>
+            <span class="status-separator">|</span>
+            <span class="status-item">Version: 2.0.0</span>
+            <span class="status-separator">|</span>
+            <span class="free-badge">FREE & OPEN</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container-menu">
+        <!-- Menu Screen -->
+        <div id="menuScreen" class="screen active">
+            <div class="menu-header">
+                <h1>⚫ BLACKFLAG COMMAND CENTER</h1>
+                <p>Select an operation to begin</p>
+            </div>Manufacturer:</label>
+                    <select id="manufacturerFilter" class="vehicle-select" onchange="filterByManufacturer(this.value)" style="margin-bottom: 10px;">
+                        <option value="">⚔️ All Manufacturers</option>
+                    </select>
+                    <label>
+
+            <!-- Vehicle Selection Panel -->
+            <div class="menu-section">
+                <h2>🚗 VEHICLE SELECTION</h2>
+                <div class="selection-panel">
+                    <label>Choose Vehicle:</label>
+                    <select id="vehicleSelector" class="vehicle-select">
+                        <option value="">⚔️ Choose a vehicle...</option>
+                    </select>
+                    <button class="menu-btn primary" onclick="selectVehicle()">SELECT VEHICLE</button>
+                </div>
+                <div id="vehicleInfo" class="info-display" style="display:none;"></div>
+            </div>
+
+            <!-- Main Functions Grid -->
+            <div class="functions-grid">
+                <div class="menu-card" onclick="openFunction('vin-decoder')">
+                    <div class="card-icon">🔍</div>
+                    <h3>VIN Decoder</h3>
+                    <p>Decode VINs & export specs</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('ecu-scanner')">
+                    <div class="card-icon">🔌</div>
+                    <h3>ECU Scanner</h3>
+                    <p>Detect ECUs & connections</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('voltage-meter')">
+                    <div class="card-icon">⚡</div>
+                    <h3>Voltage Meter</h3>
+                    <p>Monitor system voltage</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('wiring-diagrams')">
+                    <div class="card-icon">📋</div>
+                    <h3>Wiring Diagrams</h3>
+                    <p>View circuits & connections</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('tune-manager')">
+                    <div class="card-icon">⚡</div>
+                    <h3>Tune Manager</h3>
+                    <p>Browse & apply ECU tunes</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('ecu-cloning')">
+                    <div class="card-icon">💾</div>
+                    <h3>ECU Cloning</h3>
+                    <p>Backup, clone & restore</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('module-installer')">
+                    <div class="card-icon">📦</div>
+                    <h3>Module Installer</h3>
+                    <p>Install custom modules</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('emissions-control')">
+                    <div class="card-icon">💨</div>
+                    <h3>Emissions Control</h3>
+                    <p>DPF/SCR/EGR management</p>
+                </div>
+
+                <div class="menu-card" onclick="openFunction('library-browser')">
+                    <div class="card-icon">📚</div>
+                    <h3>Library Browser</h3>
+                    <p>Guides, specs & diagrams</p>
+                </div>
+            </div>
         </div>
 
-        <div class="chart-container">
-          <h3>CAN Message Activity</h3>
-          <canvas id="canChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Diagnostics Tab -->
-      <div class="tab-content" id="diagnostics">
-        <h1>Vehicle Diagnostics</h1>
-        
-        <div class="control-panel">
-          <select id="diagnosticsVehicleSelect">
-            <option value="">Select Vehicle...</option>
-          </select>
-          <button class="btn btn-primary" id="runFullDiagnostic">Run Diagnostic</button>
-        </div>
-
-        <div class="diagnostic-results" id="diagnosticResults"></div>
-      </div>
-
-      <!-- Tuning Tab -->
-      <div class="tab-content" id="tuning">
-        <h1>ECU Tuning Parameters</h1>
-        
-        <div class="control-panel">
-          <select id="tuningVehicleSelect">
-            <option value="">Select Vehicle...</option>
-          </select>
-          <button class="btn btn-primary" id="loadTuningParams">Load Parameters</button>
+        <!-- Function Screens -->
+        <!-- VIN Decoder Screen -->
+        <div id="vin-decoder" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>🔍 VIN DECODER</h2>
+            </div>
+            <div class="screen-content">
+                <div class="input-group">
+                    <label>Enter VIN Number:</label>
+                    <input type="text" id="vinInput" placeholder="e.g., 1FTFW1ST5DFC10001" maxlength="17">
+                    <button class="action-btn primary" onclick="decodeVIN()">DECODE VIN</button>
+                </div>
+                <div id="vinOutput" class="output-panel"></div>
+            </div>
         </div>
 
-        <div class="tuning-panel" id="tuningPanel"></div>
-      </div>
+        <!-- ECU Scanner Screen -->
+        <div id="ecu-scanner" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>🔌 ECU SCANNER</h2>
+            </div>
+            <div class="screen-content">
+                <div class="control-group">
+                    <h3>OBD2 Connection Status</h3>
+                    <div class="status-display">
+                        <span class="status-light offline" id="obd2Status"></span>
+                        <span id="obd2StatusText">DISCONNECTED</span>
+                    </div>
+                    <button class="action-btn secondary" onclick="initializeOBD2()">CONNECT OBD2</button>
+                </div>
+                <div class="control-group">
+                    <h3>Auto-Detect ECUs</h3>
+                    <div id="ecuDetectionResult" class="detection-result"></div>
+                    <button class="action-btn secondary" onclick="scanECUs()">SCAN FOR ECUs</button>
+                </div>
+                <div class="control-group">
+                    <h3>ECU Location Detection</h3>
+                    <div id="ecuLocationResult" class="location-result"></div>
+                    <button class="action-btn secondary" onclick="detectECULocation()">TEST BENCH / VEHICLE</button>
+                </div>
+            </div>
+        </div>
 
-      <!-- Vehicles Tab -->
-      <div class="tab-content" id="vehicles">
-        <h1>ECU Database</h1>
-        
-        <div class="vehicles-grid" id="vehiclesGrid"></div>
-      </div>
+        <!-- Voltage Meter Screen -->
+        <div id="voltage-meter" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>⚡ VOLTAGE METER</h2>
+            </div>
+            <div class="screen-content">
+                <div class="voltage-display-large">
+                    <span class="voltage-value-large" id="voltageReadingLarge">0.0V</span>
+                    <span class="voltage-label">System Voltage</span>
+                </div>
+                <div class="voltage-bar-large">
+                    <div class="voltage-fill-large" id="voltageFillLarge"></div>
+                </div>
+                <p class="info-text">Voltage range: 13.5V - 14.5V (healthy system)</p>
+                <button class="action-btn secondary" onclick="startVoltageMeterFull()">START MONITORING</button>
+            </div>
+        </div>
 
-    </main>
-  </div>
+        <!-- Wiring Diagrams Screen -->
+        <div id="wiring-diagrams" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>📋 WIRING DIAGRAMS</h2>
+            </div>
+            <div class="screen-content">
+                <div class="control-group">
+                    <label>Select Circuit:</label>
+                    <select id="circuitSelect" class="action-select">
+                        <option>Fuel Pump</option>
+                        <option>Ignition System</option>
+                        <option>Starter Motor</option>
+                        <option>Charging System</option>
+                        <option>Oxygen Sensors</option>
+                    </select>
+                </div>
+                <button class="action-btn secondary" onclick="traceCircuit()">TRACE CIRCUIT</button>
+                <div id="wiringOutput" class="output-panel"></div>
+            </div>
+        </div>
 
-  <script src="app.js"></script>
+        <!-- Tune Manager Screen -->
+        <div id="tune-manager" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>⚡ TUNE MANAGER</h2>
+            </div>
+            <div class="screen-content">
+                <div class="control-group">
+                    <label>Tune Category:</label>
+                    <select id="tuneCategory" class="action-select">
+                        <option>Performance</option>
+                        <option>Efficiency</option>
+                        <option>Emissions</option>
+                        <option>Custom</option>
+                    </select>
+                </div>
+                <button class="action-btn secondary" onclick="listTunes()">LIST TUNES</button>
+                <div id="tuneOutput" class="output-panel"></div>
+            </div>
+        </div>
+
+        <!-- ECU Cloning Screen -->
+        <div id="ecu-cloning" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>💾 ECU CLONING & BACKUP</h2>
+            </div>
+            <div class="screen-content">
+                <div class="button-row">
+                    <button class="action-btn primary" onclick="backupECU()">BACKUP ECU</button>
+                    <button class="action-btn secondary" onclick="cloneECU()">CLONE ECU</button>
+                    <button class="action-btn tertiary" onclick="restoreECU()">RESTORE ECU</button>
+                </div>
+                <div id="cloningOutput" class="output-panel"></div>
+            </div>
+        </div>
+
+        <!-- Module Installer Screen -->
+        <div id="module-installer" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>📦 MODULE INSTALLER</h2>
+            </div>
+            <div class="screen-content">
+                <div class="control-group">
+                    <label>Select Module:</label>
+                    <select id="moduleSelect" class="action-select">
+                        <option>Speed Limiter Removal</option>
+                        <option>DPF Disable Module</option>
+                        <option>EGR Disable</option>
+                        <option>SCR Disable</option>
+                        <option>Turbo Boost Optimizer</option>
+                    </select>
+                </div>
+                <div class="button-row">
+                    <button class="action-btn secondary" onclick="listModules()">LIST MODULES</button>
+                    <button class="action-btn primary" onclick="installModule()">INSTALL MODULE</button>
+                </div>
+                <div id="moduleOutput" class="output-panel"></div>
+            </div>
+        </div>
+
+        <!-- Emissions Control Screen -->
+        <div id="emissions-control" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>💨 EMISSIONS CONTROL</h2>
+            </div>
+            <div class="screen-content">
+                <div class="button-row">
+                    <button class="action-btn secondary" onclick="toggleDPF()">TOGGLE DPF</button>
+                    <button class="action-btn secondary" onclick="toggleSCR()">TOGGLE SCR</button>
+                    <button class="action-btn secondary" onclick="toggleEGR()">TOGGLE EGR</button>
+                </div>
+                <div id="emissionsOutput" class="output-panel"></div>
+            </div>
+        </div>
+
+        <!-- Library Browser Screen -->
+        <div id="library-browser" class="screen function-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="backToMenu()">← Back</button>
+                <h2>📚 LIBRARY BROWSER</h2>
+            </div>
+            <div class="screen-content">
+                <div class="library-tabs">
+                    <button class="library-tab-btn active" onclick="switchLibraryTab('vehicle-specs')">🚗 Vehicle Specs</button>
+                    <button class="library-tab-btn" onclick="switchLibraryTab('diagnostic-guides')">🔧 Diagnostic Guides</button>
+                    <button class="library-tab-btn" onclick="switchLibraryTab('wiring-library')">⚙️ Wiring Library</button>
+                </div>
+
+                <!-- Vehicle Specs Tab -->
+                <div id="vehicle-specs" class="library-tab-content active">
+                    <h3>Vehicle Specifications Database</h3>
+                    <div class="input-group">
+                        <label>Search by Manufacturer:</label>
+                        <input type="text" id="vehicleSearchInput" placeholder="e.g., Ford, Chevrolet..." onkeyup="searchVehicleDatabase()">
+                    </div>
+                    <div id="vehicleLibraryResults" class="library-results"></div>
+                </div>
+
+                <!-- Diagnostic Guides Tab -->
+                <div id="diagnostic-guides" class="library-tab-content">
+                    <h3>Diagnostic Guides & Procedures</h3>
+                    <div class="guide-list">
+                        <div class="guide-item" onclick="viewGuide('obd2-basics')">
+                            <span class="guide-icon">📖</span>
+                            <span class="guide-title">OBD-II Basics</span>
+                            <span class="guide-desc">Introduction to OBD-II protocols and standards</span>
+                        </div>
+                        <div class="guide-item" onclick="viewGuide('can-diagnostics')">
+                            <span class="guide-icon">📖</span>
+                            <span class="guide-title">CAN Bus Diagnostics</span>
+                            <span class="guide-desc">Troubleshooting CAN network issues</span>
+                        </div>
+                        <div class="guide-item" onclick="viewGuide('ecu-communication')">
+                            <span class="guide-icon">📖</span>
+                            <span class="guide-title">ECU Communication</span>
+                            <span class="guide-desc">Understanding ECU protocols and messaging</span>
+                        </div>
+                        <div class="guide-item" onclick="viewGuide('emissions-codes')">
+                            <span class="guide-icon">📖</span>
+                            <span class="guide-title">Emissions Codes</span>
+                            <span class="guide-desc">P-codes, U-codes, and diagnostic procedures</span>
+                        </div>
+                        <div class="guide-item" onclick="viewGuide('voltage-testing')">
+                            <span class="guide-icon">📖</span>
+                            <span class="guide-title">Voltage Testing</span>
+                            <span class="guide-desc">Measuring system voltages and continuity</span>
+                        </div>
+                        <div class="guide-item" onclick="viewGuide('ecu-reprogramming')">
+                            <span class="guide-icon">📖</span>
+                            <span class="guide-title">ECU Reprogramming</span>
+                            <span class="guide-desc">Safe procedures for ECU flashing</span>
+                        </div>
+                    </div>
+                    <div id="guideContent" class="output-panel"></div>
+                </div>
+
+                <!-- Wiring Library Tab -->
+                <div id="wiring-library" class="library-tab-content">
+                    <h3>Wiring Diagrams & Schematics</h3>
+                    <div class="input-group">
+                        <label>Select System:</label>
+                        <select id="wiringSystemSelect" class="action-select" onchange="loadWiringDiagram()">
+                            <option value="">Choose a system...</option>
+                            <option value="charging">Charging System</option>
+                            <option value="starting">Starting System</option>
+                            <option value="ignition">Ignition System</option>
+                            <option value="fuel">Fuel Pump Circuit</option>
+                            <option value="injectors">Fuel Injector Circuit</option>
+                            <option value="oxygen-sensors">Oxygen Sensor Circuits</option>
+                            <option value="can-bus">CAN Bus Network</option>
+                            <option value="abs">ABS/Brake System</option>
+                            <option value="transmission">Transmission Control</option>
+                            <option value="emissions">Emissions Control System</option>
+                        </select>
+                    </div>
+                    <div id="wiringDiagramDisplay" class="output-panel"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>BlackFlag v2.0 | Professional ECU Suite | Free & Open Source | MIT License</p>
+    </footer>
+
+    <script src="blackflag-app.js"></script>
 </body>
 </html>

@@ -1,0 +1,45 @@
+{
+  "name": "blackflag-desktop",
+  "version": "2.0.0",
+  "description": "BlackFlag v2.0 - Professional ECU Hacking & Tuning Suite (Desktop)",
+  "main": "main.js",
+  "author": "BlackFlag Team",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "electron-is-dev": "^3.0.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "appId": "com.blackflag.ecu",
+    "productName": "BlackFlag ECU Suite",
+    "files": [
+      "main.js",
+      "preload.js",
+      "ui/**/*",
+      "backend/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
