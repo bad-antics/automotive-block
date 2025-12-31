@@ -1,0 +1,71 @@
+<Page x:Class="BlackFlag.Views.VoltageMeterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Voltage Meter"
+      Background="{DynamicResource BackgroundBrush}">
+    
+    <StackPanel>
+        <TextBlock Text="⚡ VOLTAGE METER" FontSize="24" FontWeight="Bold" 
+                   Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,20"/>
+        
+        <Border Style="{DynamicResource CardStyle}" Margin="0,0,15,0">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock x:Name="VoltageDisplay" Text="--.-" FontSize="120" FontWeight="Bold" 
+                           Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center"/>
+                <TextBlock Text="VOLTS" FontSize="24" Foreground="{DynamicResource SecondaryForeground}" 
+                           HorizontalAlignment="Center" Margin="0,-10,0,20"/>
+                
+                <ProgressBar x:Name="VoltageBar" Width="400" Height="20" Margin="0,20,0,0"/>
+                
+                <Grid Width="400" Margin="0,5,0,0">
+                    <TextBlock Text="0V" HorizontalAlignment="Left" 
+                               Foreground="{DynamicResource SecondaryForeground}"/>
+                    <TextBlock Text="12V" HorizontalAlignment="Center" 
+                               Foreground="{DynamicResource SecondaryForeground}"/>
+                    <TextBlock Text="15V" HorizontalAlignment="Right" 
+                               Foreground="{DynamicResource SecondaryForeground}"/>
+                </Grid>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
+                    <Button x:Name="StartBtn" Content="▶ START MONITORING" 
+                            Style="{DynamicResource PrimaryButtonStyle}"
+                            Click="Start_Click" Width="180"/>
+                    <Button x:Name="StopBtn" Content="⏹ STOP" 
+                            Style="{DynamicResource ButtonStyle}"
+                            Click="Stop_Click" Width="100" Margin="10,0,0,0" IsEnabled="False"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        
+        <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock Text="MIN" Foreground="{DynamicResource SecondaryForeground}" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="MinVoltage" Text="--.-V" FontSize="24" FontWeight="Bold" 
+                               Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Text="AVG" Foreground="{DynamicResource SecondaryForeground}" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="AvgVoltage" Text="--.-V" FontSize="24" FontWeight="Bold" 
+                               Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <TextBlock Text="MAX" Foreground="{DynamicResource SecondaryForeground}" 
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="MaxVoltage" Text="--.-V" FontSize="24" FontWeight="Bold" 
+                               Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </StackPanel>
+</Page>

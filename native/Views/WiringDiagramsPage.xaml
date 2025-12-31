@@ -1,0 +1,230 @@
+<Page x:Class="BlackFlag.Views.WiringDiagramsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Wiring Diagrams"
+      Background="{DynamicResource BackgroundBrush}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="📋 INTERACTIVE WIRING DIAGRAMS &amp; NETWORK REFERENCE" FontSize="24" FontWeight="Bold" 
+                   Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,20"/>
+        
+        <Border Grid.Row="1" Style="{DynamicResource CardStyle}" Margin="0,0,15,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Text="Category:" VerticalAlignment="Center" Margin="0,0,10,0"
+                           Foreground="{DynamicResource ForegroundBrush}"/>
+                <ComboBox x:Name="CategorySelector" Grid.Column="1" Width="200" 
+                          Style="{DynamicResource ComboBoxStyle}"
+                          SelectionChanged="CategorySelector_SelectionChanged">
+                    <ComboBoxItem Content="All Diagrams" IsSelected="True"/>
+                    <ComboBoxItem Content="OBD-II / J1962"/>
+                    <ComboBoxItem Content="CAN Bus"/>
+                    <ComboBoxItem Content="K-Line / ISO"/>
+                    <ComboBoxItem Content="LIN / FlexRay / Ethernet"/>
+                    <ComboBoxItem Content="Manufacturer Specific"/>
+                    <ComboBoxItem Content="ECU / Bench Setup"/>
+                    <ComboBoxItem Content="Power / Grounding"/>
+                    <ComboBoxItem Content="Sensor Circuits"/>
+                    <ComboBoxItem Content="Actuator Circuits"/>
+                </ComboBox>
+                
+                <TextBlock Grid.Column="2" Text="Diagram:" VerticalAlignment="Center" Margin="20,0,10,0"
+                           Foreground="{DynamicResource ForegroundBrush}"/>
+                <ComboBox x:Name="DiagramSelector" Grid.Column="3" 
+                          Style="{DynamicResource ComboBoxStyle}"
+                          SelectionChanged="DiagramSelector_SelectionChanged">
+                    <ComboBoxItem Content="OBD-II Connector Pinout"/>
+                    <ComboBoxItem Content="CAN Bus Network"/>
+                    <ComboBoxItem Content="ECU Pinout"/>
+                    <ComboBoxItem Content="J1962 Connector"/>
+                    <ComboBoxItem Content="CAN Bus Troubleshooting Guide"/>
+                    <ComboBoxItem Content="K-Line (ISO 9141) Wiring"/>
+                    <ComboBoxItem Content="LIN Bus Network"/>
+                    <ComboBoxItem Content="FlexRay Network"/>
+                    <ComboBoxItem Content="Ethernet (DoIP) Network"/>
+                    <ComboBoxItem Content="Ford PATS Wiring"/>
+                    <ComboBoxItem Content="GM Class 2 Serial Data"/>
+                    <ComboBoxItem Content="Chrysler CCD/PCI Bus"/>
+                    <ComboBoxItem Content="ECU Bench Wiring Setup"/>
+                    <ComboBoxItem Content="Power Supply Requirements"/>
+                    <ComboBoxItem Content="O2 Sensor Wiring"/>
+                    <ComboBoxItem Content="MAP/MAF Sensor Circuits"/>
+                    <ComboBoxItem Content="Throttle Position Sensor"/>
+                    <ComboBoxItem Content="Crankshaft/Camshaft Position"/>
+                    <ComboBoxItem Content="Fuel Injector Circuits"/>
+                    <ComboBoxItem Content="Ignition Coil Wiring"/>
+                    <ComboBoxItem Content="VVT Solenoid Circuits"/>
+                    <ComboBoxItem Content="Turbo/Supercharger Control"/>
+                    <ComboBoxItem Content="EGR Valve Wiring"/>
+                    <ComboBoxItem Content="DPF System Wiring"/>
+                    <ComboBoxItem Content="DEF/SCR System"/>
+                    <ComboBoxItem Content="EVAP System Circuits"/>
+                </ComboBox>
+            </Grid>
+        </Border>
+        
+        <Grid Grid.Row="2" Margin="0,20,15,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Main Diagram Area -->
+            <Border Grid.Column="0" Style="{DynamicResource CardStyle}" Margin="0,0,15,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+                        <TextBlock x:Name="DiagramTitle" Text="Select a diagram type above" 
+                                   FontSize="18" FontWeight="Bold" 
+                                   Foreground="{DynamicResource AccentBrush}"/>
+                        <TextBlock x:Name="InteractiveIndicator" Text=" [INTERACTIVE]" 
+                                   FontSize="14" FontWeight="Bold" Visibility="Collapsed"
+                                   Foreground="{DynamicResource StatusOnline}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Grid x:Name="DiagramContainer">
+                            <!-- Static text diagram -->
+                            <TextBlock x:Name="DiagramContent" FontFamily="Consolas" FontSize="14"
+                                       Foreground="{DynamicResource ForegroundBrush}"
+                                       xml:space="preserve"/>
+                            
+                            <!-- Interactive Canvas overlay for clickable pins -->
+                            <Canvas x:Name="InteractiveCanvas" Background="Transparent"/>
+                        </Grid>
+                    </ScrollViewer>
+                    
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button Content="📋 Copy Diagram" Click="CopyDiagram_Click" 
+                                Style="{DynamicResource ButtonStyle}" Margin="0,0,10,0"/>
+                        <Button Content="🔍 Zoom In" Click="ZoomIn_Click" 
+                                Style="{DynamicResource ButtonStyle}" Margin="0,0,10,0"/>
+                        <Button Content="🔍 Zoom Out" Click="ZoomOut_Click" 
+                                Style="{DynamicResource ButtonStyle}" Margin="0,0,10,0"/>
+                        <Button Content="📏 Reset Zoom" Click="ResetZoom_Click" 
+                                Style="{DynamicResource ButtonStyle}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            
+            <!-- Info Panel -->
+            <Border Grid.Column="1" Style="{DynamicResource CardStyle}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock Text="📌 PIN DETAILS" FontSize="16" FontWeight="Bold" 
+                                   Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                        
+                        <TextBlock x:Name="PinInfoTitle" Text="Click a pin to see details" 
+                                   FontSize="14" FontWeight="Bold"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,0,0,10"/>
+                        
+                        <Border Background="{DynamicResource SurfaceBrush}" 
+                                BorderBrush="{DynamicResource BorderBrush}" 
+                                BorderThickness="1" Padding="10" Margin="0,0,0,15">
+                            <StackPanel>
+                                <Grid x:Name="PinDetailsGrid">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Pin:" 
+                                               Foreground="{DynamicResource SecondaryForeground}"/>
+                                    <TextBlock x:Name="PinNumber" Grid.Row="0" Grid.Column="1" Text="-" 
+                                               Foreground="{DynamicResource ForegroundBrush}" FontWeight="Bold"/>
+                                    
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Function:" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource SecondaryForeground}"/>
+                                    <TextBlock x:Name="PinFunction" Grid.Row="1" Grid.Column="1" Text="-" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource AccentBrush}" TextWrapping="Wrap"/>
+                                    
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Wire Color:" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource SecondaryForeground}"/>
+                                    <StackPanel x:Name="WireColorPanel" Grid.Row="2" Grid.Column="1" 
+                                                Orientation="Horizontal" Margin="0,5,0,0">
+                                        <Border x:Name="WireColorSwatch" Width="20" Height="20" 
+                                                BorderBrush="{DynamicResource ForegroundBrush}" BorderThickness="1" 
+                                                CornerRadius="3" Margin="0,0,8,0"/>
+                                        <TextBlock x:Name="WireColorText" Text="-" 
+                                                   Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Voltage:" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource SecondaryForeground}"/>
+                                    <TextBlock x:Name="PinVoltage" Grid.Row="3" Grid.Column="1" Text="-" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource ForegroundBrush}"/>
+                                    
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Signal Type:" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource SecondaryForeground}"/>
+                                    <TextBlock x:Name="PinSignalType" Grid.Row="4" Grid.Column="1" Text="-" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource ForegroundBrush}"/>
+                                    
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Notes:" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource SecondaryForeground}"/>
+                                    <TextBlock x:Name="PinNotes" Grid.Row="5" Grid.Column="1" Text="-" Margin="0,5,0,0"
+                                               Foreground="{DynamicResource ForegroundBrush}" TextWrapping="Wrap"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <TextBlock Text="⚡ QUICK REFERENCE" FontSize="16" FontWeight="Bold" 
+                                   Foreground="{DynamicResource AccentBrush}" Margin="0,10,0,15"/>
+                        
+                        <ItemsControl x:Name="QuickRefList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{DynamicResource SurfaceBrush}" 
+                                            BorderBrush="{DynamicResource BorderBrush}" 
+                                            BorderThickness="1" Padding="8" Margin="0,0,0,5"
+                                            Cursor="Hand" MouseLeftButtonUp="QuickRef_Click">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="40"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Pin}" FontWeight="Bold"
+                                                       Foreground="{DynamicResource AccentBrush}"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Description}" 
+                                                       Foreground="{DynamicResource ForegroundBrush}" TextWrapping="Wrap"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <TextBlock Text="🔧 DIAGNOSTIC TIPS" FontSize="16" FontWeight="Bold" 
+                                   Foreground="{DynamicResource AccentBrush}" Margin="0,20,0,15"/>
+                        
+                        <TextBlock x:Name="DiagnosticTips" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource ForegroundBrush}" FontSize="12"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

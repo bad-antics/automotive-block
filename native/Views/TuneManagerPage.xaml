@@ -1,0 +1,185 @@
+<Page x:Class="BlackFlag.Views.TuneManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Tune Manager"
+      Background="{DynamicResource BackgroundBrush}">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Text="🎛️ TUNE MANAGER" FontSize="24" FontWeight="Bold" 
+                       Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,10"/>
+            <TextBlock Text="Browse and download performance tunes for your vehicle" 
+                       Foreground="{DynamicResource SecondaryForeground}" Margin="0,0,0,20"/>
+            
+            <!-- Vehicle Selection -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,0,15,0">
+                <StackPanel>
+                    <TextBlock Text="VEHICLE SELECTION" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Manufacturer:" VerticalAlignment="Center" 
+                                   Margin="0,0,15,10" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ManufacturerCombo" 
+                                  Style="{DynamicResource ComboBoxStyle}" Margin="0,0,0,10"
+                                  SelectionChanged="ManufacturerCombo_SelectionChanged"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Vehicle:" VerticalAlignment="Center" 
+                                   Margin="0,0,15,0" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="VehicleCombo" 
+                                  Style="{DynamicResource ComboBoxStyle}"
+                                  SelectionChanged="VehicleCombo_SelectionChanged"/>
+                    </Grid>
+                    
+                    <!-- VIN Validation -->
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <TextBlock Text="VIN Number:" VerticalAlignment="Center" 
+                                   Margin="0,0,15,0" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBox x:Name="VinTextBox" Width="250" Height="30" MaxLength="17"
+                                 Style="{DynamicResource TextBoxStyle}" TextChanged="VinTextBox_TextChanged"
+                                 ToolTip="Enter 17-character VIN for compatibility validation"/>
+                        <TextBlock x:Name="VinStatus" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <Button Content="🔍 Decode VIN" Margin="10,0,0,0" Padding="8,4" 
+                                Style="{DynamicResource ButtonStyle}" Click="DecodeVin_Click"/>
+                    </StackPanel>
+                    
+                    <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1" Padding="15" Margin="0,15,0,0">
+                        <StackPanel x:Name="VehicleInfoPanel" Visibility="Collapsed">
+                            <TextBlock x:Name="VehicleInfo" FontWeight="Bold" FontSize="14"
+                                       Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,5"/>
+                            <TextBlock x:Name="EcuInfo" Foreground="{DynamicResource SecondaryForeground}"/>
+                            <TextBlock x:Name="CompatibilityInfo" FontWeight="Bold" Margin="0,5,0,0"
+                                       Foreground="{DynamicResource AccentBrush}"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+            
+            <!-- Available Tunes -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="🔥 AVAILABLE TUNES" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <TextBlock Text="Performance and economy calibration files" 
+                               Foreground="{DynamicResource SecondaryForeground}" Margin="0,0,0,10"/>
+                    
+                    <ListBox x:Name="TunesList" Background="{DynamicResource SurfaceBrush}"
+                             BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                             Height="300" Margin="0,0,0,15">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource SurfaceBrush}" Padding="10" Margin="0,2">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <TextBlock Grid.Column="0" Text="{Binding Icon}" FontSize="28"
+                                                   VerticalAlignment="Center" Margin="0,0,15,0"/>
+                                        
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" 
+                                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <TextBlock Foreground="{DynamicResource SecondaryForeground}">
+                                                <Run Text="{Binding Description}"/>
+                                            </TextBlock>
+                                            <TextBlock Foreground="{DynamicResource AccentBrush}" FontSize="12">
+                                                <Run Text="{Binding PowerGain}"/> • <Run Text="{Binding FileSize}"/> • <Run Text="{Binding Version}"/>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Requirements}" FontSize="11" FontStyle="Italic"
+                                                       Foreground="{DynamicResource SecondaryForeground}" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        
+                                        <TextBlock Grid.Column="2" Text="{Binding Price}" 
+                                                   VerticalAlignment="Center" Margin="0,0,15,0" FontWeight="Bold"
+                                                   Foreground="{DynamicResource AccentBrush}"/>
+                                        
+                                        <Button Grid.Column="3" Content="📥 Download" 
+                                                Style="{DynamicResource ButtonStyle}"
+                                                Tag="{Binding}" Click="DownloadTune_Click"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="📥 IMPORT CUSTOM TUNE" Style="{DynamicResource ButtonStyle}" 
+                                Click="ImportTune_Click"/>
+                        <Button Content="🔄 REFRESH TUNES" Style="{DynamicResource ButtonStyle}" 
+                                Margin="10,0,0,0" Click="Refresh_Click"/>
+                        <Button Content="📂 OPEN TUNES FOLDER" Style="{DynamicResource ButtonStyle}" 
+                                Margin="10,0,0,0" Click="OpenTunesFolder_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            
+            <!-- Download Info -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="ℹ️ TUNE LIBRARY INFORMATION" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Tune Location:"
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TunePath" Text="—"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,0,0,10"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Downloaded Tunes:"
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TotalTunes" Text="0 files"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,0,0,10"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Storage Used:"
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="StorageUsed" Text="0 MB"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,0,0,10"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Download:"
+                                   Foreground="{DynamicResource SecondaryForeground}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="LastDownload" Text="—"
+                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Status Bar -->
+            <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="0,1,0,0" Padding="15,10" Margin="0,20,-15,0">
+                <Grid>
+                    <TextBlock x:Name="StatusText" Text="⚔️ Select a vehicle to view available tunes"
+                               Foreground="{DynamicResource SecondaryForeground}"/>
+                    <ProgressBar x:Name="DownloadProgress" Height="4" VerticalAlignment="Bottom"
+                                 Margin="0,5,0,-10" Visibility="Collapsed"
+                                 Foreground="{DynamicResource AccentBrush}"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

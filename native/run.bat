@@ -1,0 +1,3 @@
+@echo off
+echo Starting BlackFlag v2.0...
+dotnet run

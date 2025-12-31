@@ -1,0 +1,20 @@
+﻿BlackFlag
+
+
+exe
+C#
+.cs
+W:\misc workspaces\blackflag\native\obj\Release\net8.0-windows\
+BlackFlag
+none
+false
+TRACE;RELEASE;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+W:\misc workspaces\blackflag\native\App.xaml
+18965525490
+
+1977724473
+210-1986786741
+MainWindow.xaml;Themes\DarkTheme.xaml;Themes\FordBlueTheme.xaml;Themes\OrangeTechTheme.xaml;Themes\RetroGreenTheme.xaml;Views\DashboardPage.xaml;Views\EcuCloningPage.xaml;Views\EcuScannerPage.xaml;Views\EcuUnlockPage.xaml;Views\EmissionsDeletePage.xaml;Views\J2534Page.xaml;Views\LiveDataPage.xaml;Views\OeFlashPage.xaml;Views\PerformancePage.xaml;Views\TuneManagerPage.xaml;Views\VinDecoderPage.xaml;Views\VoltageMeterPage.xaml;Views\WiringDiagramsPage.xaml;
+
+False
+

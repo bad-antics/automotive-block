@@ -1,0 +1,137 @@
+<Page x:Class="BlackFlag.Views.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Dashboard"
+      Background="{DynamicResource BackgroundBrush}">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Text="⚫ BLACKFLAG COMMAND CENTER" FontSize="24" FontWeight="Bold" 
+                       Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,10"/>
+            <TextBlock Text="Professional ECU Hacking &amp; Tuning Suite" 
+                       Foreground="{DynamicResource SecondaryForeground}" Margin="0,0,0,30"/>
+            
+            <!-- Quick Stats -->
+            <WrapPanel Margin="0,0,0,30">
+                <Border Style="{DynamicResource CardStyle}" Width="200">
+                    <StackPanel>
+                        <TextBlock Text="📊" FontSize="32"/>
+                        <TextBlock Text="Database Status" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBlock Text="8 Vehicles Loaded" Foreground="{DynamicResource AccentBrush}"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Style="{DynamicResource CardStyle}" Width="200">
+                    <StackPanel>
+                        <TextBlock Text="🔌" FontSize="32"/>
+                        <TextBlock Text="Connection" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBlock Text="No Device" Foreground="{DynamicResource SecondaryForeground}"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Style="{DynamicResource CardStyle}" Width="200">
+                    <StackPanel>
+                        <TextBlock Text="💾" FontSize="32"/>
+                        <TextBlock Text="Backups" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBlock Text="0 Saved" Foreground="{DynamicResource SecondaryForeground}"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Style="{DynamicResource CardStyle}" Width="200">
+                    <StackPanel>
+                        <TextBlock Text="⚡" FontSize="32"/>
+                        <TextBlock Text="Tunes" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBlock Text="0 Available" Foreground="{DynamicResource SecondaryForeground}"/>
+                    </StackPanel>
+                </Border>
+            </WrapPanel>
+            
+            <!-- Quick Actions -->
+            <TextBlock Text="QUICK ACTIONS" FontWeight="Bold" Foreground="{DynamicResource SecondaryForeground}" 
+                       Margin="0,0,0,15"/>
+            
+            <WrapPanel>
+                <Button Content="🔍 Scan Vehicle" Style="{DynamicResource ButtonStyle}" Margin="0,0,10,10" Width="150"/>
+                <Button Content="📖 Read ECU" Style="{DynamicResource ButtonStyle}" Margin="0,0,10,10" Width="150"/>
+                <Button Content="💾 Backup ECU" Style="{DynamicResource ButtonStyle}" Margin="0,0,10,10" Width="150"/>
+                <Button Content="📋 View DTCs" Style="{DynamicResource ButtonStyle}" Margin="0,0,10,10" Width="150"/>
+            </WrapPanel>
+            
+            <!-- System Info -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="SYSTEM INFORMATION" FontWeight="Bold" 
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Application Version:" 
+                                   Foreground="{DynamicResource SecondaryForeground}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="2.0.0" 
+                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Database Location:" 
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="%LOCALAPPDATA%\BlackFlag" 
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Runtime:" 
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text=".NET 8.0 (Native)" 
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Platform:" 
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="Windows (WPF)" 
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0"/>
+                        
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="License:" 
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="MIT - Free &amp; Open Source" 
+                                   Foreground="{DynamicResource AccentBrush}" Margin="0,5,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Credits -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="CREDITS" FontWeight="Bold" 
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Lead Developer:" 
+                                   Foreground="{DynamicResource SecondaryForeground}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="antX" FontWeight="Bold"
+                                   Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Special Thanks:" 
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="The ECU tuning and reverse engineering community" 
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

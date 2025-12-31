@@ -1,0 +1,270 @@
+<Page x:Class="BlackFlag.Views.EmissionsDeletePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Emissions Delete"
+      Background="{DynamicResource BackgroundBrush}">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Text="🚫 EMISSIONS DELETE TUNING" FontSize="24" FontWeight="Bold" 
+                       Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,10"/>
+            <TextBlock Text="⚠️ FOR OFF-ROAD / COMPETITION USE ONLY - Check local laws before use" 
+                       Foreground="#ff6600" FontWeight="Bold" Margin="0,0,0,20"/>
+            
+            <!-- Warning Banner -->
+            <Border Background="#331111" BorderBrush="#ff4444" BorderThickness="2" 
+                    CornerRadius="4" Padding="15" Margin="0,0,15,20">
+                <StackPanel>
+                    <TextBlock Text="⚠️ LEGAL DISCLAIMER" FontWeight="Bold" FontSize="16"
+                               Foreground="#ff4444" Margin="0,0,0,10"/>
+                    <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ForegroundBrush}">
+                        Emissions system modifications may violate federal and state laws. The Clean Air Act 
+                        prohibits tampering with emissions controls on vehicles used on public roads. These 
+                        options are provided for OFF-ROAD and COMPETITION vehicles ONLY. By using these 
+                        features, you accept full responsibility for compliance with all applicable laws.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+            
+            <!-- DPF Delete Options -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,0,15,0">
+                <StackPanel>
+                    <TextBlock Text="DPF (DIESEL PARTICULATE FILTER) DELETE" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove DPF Regeneration Cycles" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Disables active regeneration, removes soot loading parameters"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                            <TextBlock Text="Benefits: Reduced exhaust temps, improved fuel economy, eliminates regen issues"
+                                       Foreground="{DynamicResource AccentBrush}" FontSize="12" Margin="0,5,0,0"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkDpfRegen" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove DPF Differential Pressure Sensor" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Eliminates DPF pressure monitoring and related fault codes"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkDpfPressure" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove DPF Temperature Sensors" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Disables exhaust temperature monitoring for DPF system"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkDpfTemp" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- EGR Delete Options -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="EGR (EXHAUST GAS RECIRCULATION) DELETE" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Disable EGR Valve Operation" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Keeps EGR valve closed, removes EGR flow from combustion"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                            <TextBlock Text="Benefits: Lower intake temps, cleaner intake, improved throttle response"
+                                       Foreground="{DynamicResource AccentBrush}" FontSize="12" Margin="0,5,0,0"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkEgrValve" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove EGR Cooler Monitoring" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Disables EGR cooler efficiency and temperature monitoring"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkEgrCooler" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Delete EGR-Related DTCs" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Removes diagnostic trouble codes: P0401, P0402, P0403, P0404, P0405, P0406, P0407, P0408"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkEgrDtc" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- DEF/SCR Delete Options -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="DEF/SCR (SELECTIVE CATALYTIC REDUCTION) DELETE" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Disable DEF Injection System" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Stops AdBlue/DEF fluid injection, removes DEF tank monitoring"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                            <TextBlock Text="Benefits: No more DEF refills, removes derate conditions"
+                                       Foreground="{DynamicResource AccentBrush}" FontSize="12" Margin="0,5,0,0"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkDefInjection" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove SCR Catalyst Efficiency Monitoring" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Disables NOx sensor readings and catalyst efficiency checks"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkScrEfficiency" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove Speed Derate for Low DEF" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Prevents limp mode / 5mph derate when DEF level is low or quality poor"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkDefDerate" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Additional Delete Options -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="ADDITIONAL DELETE OPTIONS" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Disable Catalytic Converter Efficiency Monitor" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Removes O2 sensor catalyst efficiency DTCs (P0420, P0430)"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkCatMonitor" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Disable Secondary Air Injection (SAI)" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Removes SAI pump operation and monitoring (gasoline vehicles)"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkSai" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove Evaporative Emissions (EVAP) Monitoring" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Disables fuel tank leak detection and purge valve monitoring"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkEvap" VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Remove Speed Limiter" FontWeight="Bold"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                            <TextBlock Text="Removes factory top speed limiter (use with caution)"
+                                       Foreground="{DynamicResource SecondaryForeground}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" x:Name="ChkSpeedLimiter" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Action Buttons -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,20">
+                <StackPanel>
+                    <TextBlock Text="GENERATE TUNE FILE" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="📝 GENERATE DELETE TUNE" Style="{DynamicResource ButtonStyle}"
+                                Click="GenerateDeleteTune_Click"/>
+                        <Button Content="💾 SAVE CONFIGURATION" Style="{DynamicResource ButtonStyle}" 
+                                Margin="10,0,0,0" Click="SaveConfig_Click"/>
+                        <Button Content="📥 LOAD CONFIGURATION" Style="{DynamicResource ButtonStyle}" 
+                                Margin="10,0,0,0" Click="LoadConfig_Click"/>
+                    </StackPanel>
+                    
+                    <TextBlock x:Name="StatusText" Margin="0,15,0,0" 
+                               Foreground="{DynamicResource SecondaryForeground}"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

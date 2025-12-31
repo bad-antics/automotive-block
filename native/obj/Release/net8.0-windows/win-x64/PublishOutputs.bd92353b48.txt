@@ -1,0 +1,2 @@
+W:\misc workspaces\blackflag\native\publish\BlackFlag.pdb
+W:\misc workspaces\blackflag\native\publish\BlackFlag.exe

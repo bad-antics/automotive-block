@@ -1,0 +1,214 @@
+<Page x:Class="BlackFlag.Views.J2534Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="J2534 PassThru"
+      Background="{DynamicResource BackgroundBrush}">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Text="🔌 J2534 PASSTHRU INTERFACE" FontSize="24" FontWeight="Bold" 
+                       Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,10"/>
+            <TextBlock Text="SAE J2534 compliant device communication for ECU reprogramming" 
+                       Foreground="{DynamicResource SecondaryForeground}" Margin="0,0,0,20"/>
+            
+            <!-- Device Selection -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,0,15,0">
+                <StackPanel>
+                    <TextBlock Text="DEVICE SELECTION" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Text="PassThru Device:" VerticalAlignment="Center" Margin="0,0,15,0"
+                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ComboBox Grid.Column="1" x:Name="DeviceSelector" 
+                                  Style="{DynamicResource ComboBoxStyle}">
+                            <ComboBoxItem Content="🔍 Scan for devices..." IsSelected="True"/>
+                            <ComboBoxItem Content="Drew Technologies CarDAQ-Plus 3"/>
+                            <ComboBoxItem Content="Drew Technologies MongoosePro"/>
+                            <ComboBoxItem Content="Autel MaxiSys VCI"/>
+                            <ComboBoxItem Content="Bosch VCI"/>
+                            <ComboBoxItem Content="Continental VCI"/>
+                            <ComboBoxItem Content="Dearborn DPA 5"/>
+                            <ComboBoxItem Content="ELM327 (Limited J2534)"/>
+                            <ComboBoxItem Content="GM MDI / MDI 2"/>
+                            <ComboBoxItem Content="Ford VCM II / VCMM"/>
+                            <ComboBoxItem Content="Honda HDS / i-HDS"/>
+                            <ComboBoxItem Content="OBDLink MX+"/>
+                            <ComboBoxItem Content="OpenPort 2.0 by Tactrix"/>
+                            <ComboBoxItem Content="Snap-on VERUS / MODIS"/>
+                            <ComboBoxItem Content="Toyota Techstream VIM"/>
+                        </ComboBox>
+                        <Button Grid.Column="2" Content="🔄 SCAN" Style="{DynamicResource ButtonStyle}" 
+                                Margin="10,0,0,0" Click="ScanDevices_Click"/>
+                    </Grid>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button Content="🔌 CONNECT" Style="{DynamicResource ButtonStyle}" Click="Connect_Click"/>
+                        <Button Content="⏏️ DISCONNECT" Style="{DynamicResource ButtonStyle}" 
+                                Margin="10,0,0,0" Click="Disconnect_Click"/>
+                        <Button Content="ℹ️ DEVICE INFO" Style="{DynamicResource ButtonStyle}" 
+                                Margin="10,0,0,0" Click="DeviceInfo_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            
+            <!-- Connection Status -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="CONNECTION STATUS" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Device Status:"
+                                   Foreground="{DynamicResource SecondaryForeground}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="DeviceStatus" Text="Not Connected"
+                                   Foreground="#ff6600"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Firmware Version:"
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="FirmwareVersion" Text="—"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="DLL Version:"
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="DllVersion" Text="—"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="API Version:"
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="ApiVersion" Text="—"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0"/>
+                        
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Protocols Supported:"
+                                   Foreground="{DynamicResource SecondaryForeground}" Margin="0,5,0,0"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="ProtocolsSupported" Text="—"
+                                   Foreground="{DynamicResource ForegroundBrush}" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Protocol Selection -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="PROTOCOL CONFIGURATION" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="Protocol:" VerticalAlignment="Center" Margin="0,0,15,0"
+                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ComboBox Grid.Column="1" x:Name="ProtocolSelector" 
+                                  Style="{DynamicResource ComboBoxStyle}">
+                            <ComboBoxItem Content="CAN (ISO 15765-4)" IsSelected="True"/>
+                            <ComboBoxItem Content="ISO 9141-2 (K-Line)"/>
+                            <ComboBoxItem Content="ISO 14230-4 (KWP2000)"/>
+                            <ComboBoxItem Content="J1850 PWM (Ford)"/>
+                            <ComboBoxItem Content="J1850 VPW (GM)"/>
+                            <ComboBoxItem Content="SCI (Chrysler)"/>
+                            <ComboBoxItem Content="ISO 15765 (UDS on CAN)"/>
+                            <ComboBoxItem Content="SAE J2190 (Enhanced OBD)"/>
+                        </ComboBox>
+                        
+                        <TextBlock Grid.Row="1" Text="Baud Rate:" VerticalAlignment="Center" 
+                                   Margin="0,10,15,0" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="BaudRateSelector" 
+                                  Style="{DynamicResource ComboBoxStyle}" Margin="0,10,0,0">
+                            <ComboBoxItem Content="Auto Detect" IsSelected="True"/>
+                            <ComboBoxItem Content="500000 (High Speed CAN)"/>
+                            <ComboBoxItem Content="250000 (Low Speed CAN)"/>
+                            <ComboBoxItem Content="125000"/>
+                            <ComboBoxItem Content="10400 (ISO 9141/14230)"/>
+                            <ComboBoxItem Content="41600 (J1850 PWM)"/>
+                        </ComboBox>
+                        
+                        <TextBlock Grid.Row="2" Text="CAN ID Format:" VerticalAlignment="Center" 
+                                   Margin="0,10,15,0" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CanIdSelector" 
+                                  Style="{DynamicResource ComboBoxStyle}" Margin="0,10,0,0">
+                            <ComboBoxItem Content="11-bit (Standard)" IsSelected="True"/>
+                            <ComboBoxItem Content="29-bit (Extended)"/>
+                            <ComboBoxItem Content="Mixed Mode"/>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Supported Protocols Reference -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,0">
+                <StackPanel>
+                    <TextBlock Text="J2534 PROTOCOL REFERENCE" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <TextBlock FontFamily="Consolas" FontSize="12" Foreground="{DynamicResource ForegroundBrush}"
+                               xml:space="preserve">
+╔════════════════════════════════════════════════════════════════════════╗
+║  PROTOCOL          │ DESCRIPTION                    │ TYPICAL USE      ║
+╠════════════════════════════════════════════════════════════════════════╣
+║  J1850 PWM         │ 41.6 kbps, Ford                │ Ford pre-2008    ║
+║  J1850 VPW         │ 10.4 kbps, GM                  │ GM pre-2008      ║
+║  ISO 9141-2        │ K-Line, 10.4 kbps              │ Asian/Euro OBD   ║
+║  ISO 14230-4       │ KWP2000, K-Line                │ Asian/Euro OBD   ║
+║  ISO 15765-4       │ CAN, 250/500 kbps              │ 2008+ All Makes  ║
+║  SAE J2190         │ Enhanced diagnostics           │ OEM-specific     ║
+║  ISO 15765 (UDS)   │ Unified Diagnostic Services    │ Modern ECU flash ║
+║  SCI               │ Chrysler Serial Comm           │ Chrysler legacy  ║
+╚════════════════════════════════════════════════════════════════════════╝
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+            
+            <!-- Operations -->
+            <Border Style="{DynamicResource CardStyle}" Margin="0,20,15,20">
+                <StackPanel>
+                    <TextBlock Text="ECU OPERATIONS" FontWeight="Bold" FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,15"/>
+                    
+                    <WrapPanel>
+                        <Button Content="🔍 READ ECU ID" Style="{DynamicResource ButtonStyle}" 
+                                Margin="0,0,10,10" Click="ReadEcuId_Click"/>
+                        <Button Content="📖 READ FLASH" Style="{DynamicResource ButtonStyle}" 
+                                Margin="0,0,10,10" Click="ReadFlash_Click"/>
+                        <Button Content="📝 WRITE FLASH" Style="{DynamicResource ButtonStyle}" 
+                                Margin="0,0,10,10" Click="WriteFlash_Click"/>
+                        <Button Content="🔄 RECOVERY MODE" Style="{DynamicResource ButtonStyle}" 
+                                Margin="0,0,10,10" Click="RecoveryMode_Click"/>
+                        <Button Content="🧹 CLEAR DTCs" Style="{DynamicResource ButtonStyle}" 
+                                Margin="0,0,10,10" Click="ClearDtcs_Click"/>
+                        <Button Content="📊 LIVE DATA" Style="{DynamicResource ButtonStyle}" 
+                                Margin="0,0,10,10" Click="LiveData_Click"/>
+                    </WrapPanel>
+                    
+                    <TextBlock x:Name="OperationStatus" Margin="0,15,0,0" 
+                               Foreground="{DynamicResource SecondaryForeground}"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
