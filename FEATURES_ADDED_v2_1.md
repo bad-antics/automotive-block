@@ -9,7 +9,7 @@ Comprehensive enhancement of BlackFlag v2.0 with Discord integration, profession
 
 ### 1. 💬 Discord Community Link
 - **Location**: Navigation bar (top right)
-- **URL**: https://discord.gg/killers
+- **URL**: https://x.com/AnonAntics
 - **Styling**: Discord Blue gradient with hover effects
 - **Implementation**: Added to both `/public` and `/src` versions
 - **Files Modified**:
@@ -303,7 +303,7 @@ Each vehicle includes:
 
 ## ✅ Verification Checklist
 
-- ✓ Discord link functional (https://discord.gg/killers)
+- ✓ Discord link functional (https://x.com/AnonAntics)
 - ✓ VIN decoder validates input and decodes patterns
 - ✓ VIN export creates .txt file with complete specs
 - ✓ OBD2 connection toggles status indicator
